@@ -1,28 +1,19 @@
+require("dotenv").config();
 const session = require("express-session");
-const mongoDbStore = require("connect-mongodb-session")(session);
-
-function createSessionStore() {
-  const store = new mongoDbStore({
-    uri: process.env.MONGODB_URI,
-    databaseName: "bubiwear",
-    collection: "sessions",
-  });
-
-  store.on("error", function (error) {
-    console.error("Session store error:", error);
-  });
-
-  return store;
-}
+const MongoStore = require("connect-mongo");
 
 function createSessionConfig() {
   return {
-    secret: "strc-wrb-gks-bb-esnnaziko",
+    secret: process.env.SESSION_SECRET || "strc-wrb-gks-bb-esnnaziko",
     resave: false,
     saveUninitialized: false,
-    store: createSessionStore(),
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      dbName: "bubiwear",
+      collectionName: "sessions",
+    }),
     cookie: {
-      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days in milliseconds
+      maxAge: 2 * 24 * 60 * 60 * 1000, // 2 gün
     },
   };
 }
