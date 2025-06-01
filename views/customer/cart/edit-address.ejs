@@ -1,0 +1,49 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Edit Adress' }) %>
+<link rel="stylesheet" href="/styles/cart.css">
+<script src="/javascript/cart-management.js" defer></script>
+</head>
+<body>
+    <%- include('../../shared/includes/header') %>
+    <main class="cart-layout">
+        <div class="address-area" id="cart-area">
+            <form action="/cart/update-address/<%= address.id %>" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="personal-info">
+                    <h2>Personal Information</h2>
+                    <div class="form-control">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" value="<%= address.fullName %>" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="number" id="phoneNumber" name="phoneNumber" min="0" value="<%= address.phoneNumber %>" required pattern="\d*">
+                    </div>
+                    </div>
+                <div class="address-info">
+                    <h2>Shipping Address</h2>
+                    <div class="form-control">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" value="<%= address.city %>" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="postCode">Post Code</label>
+                        <input type="number" id="postCode" name="postCode" min="0" value="<%= address.postCode %>" required pattern="\d*">
+                    </div>
+                    <div class="form-control">
+                        <label for="district">District</label>
+                        <input type="text" id="district" name="district" value="<%= address.district %>" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="street">Street</label>
+                        <input type="text" id="street" name="street" value="<%= address.street %>" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="apartment">Apartment/Door</label>
+                        <input type="text" id="apartment" name="apartment" value="<%= address.apartment %>" required>
+                    </div>
+                </div>
+                <button class="btn-dark" id="update-btn" type="submit">Update</button>
+            </form>
+        </div>
+    </main>
+    <%- include('../../shared/includes/footer') %>

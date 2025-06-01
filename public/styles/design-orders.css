@@ -1,0 +1,419 @@
+html {
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.design-order-layout {
+    display: inline-block;
+    height: 100vh;
+    padding-top: 4rem;
+}
+
+.select-color {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+    margin-top: 2rem;
+    z-index: 6; /* Ensure it is above add-design */
+    height: auto; /* Ensure height matches content */
+    box-sizing: border-box;
+}
+.colors{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+.colors input[type="radio"] {
+    display: none;
+}
+.colors label {
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+}
+.colors .black {
+    background-color: var(--color-ts-1);
+}
+.colors .white {
+    background-color: var(--color-ts-2);
+}
+.colors .grey {
+    background-color: var(--color-ts-3);
+}
+.colors input[type="radio"]:checked + label {
+    border: solid 0.2rem var(--color-primary-orange);
+}
+.black{
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 1.5rem;
+    background-color: var(--color-ts-1);
+    cursor: pointer;
+}
+.white{
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 1.5rem;
+    background-color: var(--color-ts-2);
+    cursor: pointer;
+}
+.grey{
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 1.5rem;
+    background-color: var(--color-ts-3);
+    cursor: pointer;
+}
+.black:hover, .white:hover, .grey:hover{
+    border: solid 0.2rem var(--color-primary-orange);
+}
+.add-design {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45rem;
+    height: 100%;
+    padding-top: 5rem;
+    background-color: var(--color-form-bg);
+    text-align: center;
+    overflow: visible; /* Ensure overflow is visible */
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.chart-area{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 2rem;
+    margin-top: 3rem;
+    align-items: end;
+    z-index: 6; /* Ensure it is above add-design */
+    height: auto; /* Ensure height matches content */
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+}
+#add-to-chart-design {
+    width: 8rem;
+    height: 2rem;
+    right: 0;
+    border: none;
+    background-color: var(--color-text-btn-dark);
+    border-radius: 0.25rem;
+    color: var(--color-text-btn-ligth);
+    cursor: pointer;
+}
+#add-to-chart-design:hover {
+    background-color: var(--color-text-btn-dark-hover);
+}
+.user-design-interaction {
+    margin-top: 16rem;
+}
+.template {
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 0;
+}
+.design-border {
+    width: 18rem;
+    height: 29rem;
+    aspect-ratio: 18 / 27;
+    border: dashed 0.25rem var(--color-ts-1);
+    border-radius: 2rem;
+    margin-bottom: -40rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+}
+.upload-img {
+    width: 5rem;
+    height: auto;
+    cursor: pointer;
+    z-index: 6; /* Ensure it is above other elements */
+    position: relative; /* Ensure it is positioned correctly */
+}
+.upload-image-info {
+    position: relative;
+    z-index: 3;
+}
+.direction-btn {
+    width: 8rem;
+    height: 2rem;
+    border: none;
+    background-color: var(--color-text-btn-dark);
+    border-radius: 0.25rem;
+    color: var(--color-text-btn-ligth);
+    cursor: pointer;
+    position: relative; /* Container içinde sabit kalması için */
+    z-index: 15; /* Görsel ve diğer elemanların üstünde olması için */
+    margin-top: 13rem;
+}
+.direction-btn:hover {
+    background-color: var(--color-text-btn-dark-hover);
+}
+.uploaded-image-container {
+    position: absolute; /* Tasarım sınırları içinde konumlandırılır */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+}
+.uploaded-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: move;
+    z-index: 8;
+}
+.close-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: var(--color-primary-orange);
+    color: white;
+    text-align: center;
+    line-height: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+}
+.upload-image-bottom-info-front {
+    position: relative;
+    margin-top: -23rem;
+    z-index: 7;
+}
+.upload-image-bottom-info-back {
+    position: relative;
+    margin-top: -23rem;
+    z-index: 7;
+}
+.upload-text{
+    z-index: 7;
+}
+.move-tool {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    user-select: none;
+}
+.resize-handle-front {
+    position: absolute;
+    z-index: 9; /* Varsayılan z-index */
+    width: 1rem;
+    height: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: se-resize;
+    pointer-events: auto;
+}
+.resize-handle-back {
+    position: absolute;
+    z-index: 9; /* Varsayılan z-index */
+    width: 1rem;
+    height: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: se-resize;
+    pointer-events: auto;
+}
+
+#image-upload-front {
+    display: block;
+}
+#image-upload-back {
+    display: none;
+}
+.go-to-wider-screen {
+    display: none;
+    width: 100vw;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    gap: 1rem;
+}
+#s-i-t-1 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 500;
+}
+#go-home {
+    background-color: var(--color-text-btn-dark);
+    color: var(--color-text-btn-ligth);
+    border-radius: 0.25rem;
+    padding: 0.4rem 0.6rem;
+}
+.screen-animation {
+    border: solid 0.25rem var(--color-primary-orange);
+    border-radius: 0.5rem;
+    width: 4rem;
+    height: 8rem;
+    animation: scale-animation 3.5s infinite;
+}
+.camera-area {
+    background-color: var(--color-primary-orange);
+    width: 1.75rem;
+    height: 0.5rem;
+    border-radius: 0.25rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.125rem;
+}
+.animation-screen-response {
+    margin-top: 3rem;
+    font-size: 1.25rem;
+    position: relative;
+}
+
+.animation-screen-response::before {
+    content: 'X';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 1;
+    animation: hide-x 3.5s steps(1, end) infinite;
+    z-index: 2; /* Ensure 'X' is above '✓' */
+}
+
+.animation-screen-response::after {
+    content: '✓';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: show-check 3.5s steps(1, end) infinite;
+    z-index: 1; /* Ensure '✓' is below 'X' */
+}
+
+@keyframes scale-animation {
+    0% {
+      width: 4rem;
+      height: 8rem;
+    }
+    15% {
+        width: 4rem;
+        height: 8rem;
+    }
+    35% {
+        width: 16rem;
+        height: 10rem;
+    }
+    65% {
+        width: 16rem;
+        height: 10rem;
+    }
+    85% {
+        width: 4rem;
+        height: 8rem;
+    }
+    100% {
+        width: 4rem;
+        height: 8rem;
+    }
+}
+
+@keyframes toggle-symbols {
+    0%, 15% {
+        opacity: 1;
+    }
+    35%, 65% {
+        opacity: 0;
+    }
+    85%, 100% {
+        opacity: 1;
+    }
+}
+
+@keyframes show-check {
+    0%, 15% {
+        opacity: 0;
+    }
+    35%, 65% {
+        opacity: 1;
+    }
+    85%, 100% {
+        opacity: 0;
+    }
+}
+
+@keyframes hide-x {
+    0%, 15% {
+        opacity: 1;
+    }
+    35%, 65% {
+        opacity: 0;
+    }
+    85%, 100% {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 64rem) {
+    #design-form {
+        display: none;
+    }
+    .go-to-wider-screen {
+        display: flex;
+        margin-top: -4rem;
+    }
+}
+
+
+
+.designed-order-layout {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.design-border {
+    position: relative; 
+    width: 18rem; 
+    height: 29rem; 
+    margin-bottom: 3rem; 
+    border: dashed 0.25rem #000; 
+    border-radius: 2rem;
+    z-index: 100;
+}
+.front-image-preview, .back-image-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+.front-template {
+    display: absolute;
+    width: 700px;
+    margin-top: -670px;
+}
+.back-template {
+    display: absolute;
+    width: 700px;
+    margin-top: -670px;
+}
+.big-images img {
+    width: 100%;
+    height: auto;
+}

@@ -1,0 +1,164 @@
+<form id="product-form" action="<%= submitPath %>" method="POST">
+    <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="uploadedImageUrls" id="uploadedImageUrls">
+    <p class="inpt-lbl-flex">
+        <label for="">Title</label>
+        <input type="text" id="title" name="title" value="<%= product.title %>" required>
+    </p>
+    <p class="inpt-lbl-flex">
+        <label for="">Price</label>
+        <input type="number" id="price" name="price" value="<%= product.price %>" required>
+    </p>
+    <p class="inpt-lbl-flex-row">
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+            <option value="t-shirts" <%= product.category === 't-shirts' ? 'selected' : '' %>>T-shirt</option>
+            <option value="sweatshirts" <%= product.category === 'sweatshirts' ? 'selected' : '' %>>Sweatshirt</option>
+            <option value="pants" <%= product.category === 'pants' ? 'selected' : '' %>>Pants</option>
+            <option value="bags" <%= product.category === 'bags' ? 'selected' : '' %>>Bags</option>
+        </select>
+    </p>
+    <div class="check-boxes">
+        <p>
+            <label for="color">Color Options</label>
+            <input type="checkbox" id="black" name="colors" value="black" <%= product.colors && product.colors.includes('black') ? 'checked' : '' %>>
+            <label class="opt" for="black">Black</label>
+
+            <input type="checkbox" id="white" name="colors" value="white" <%= product.colors && product.colors.includes('white') ? 'checked' : '' %>>
+            <label class="opt" for="white">White</label>
+
+            <input type="checkbox" id="gray" name="colors" value="gray" <%= product.colors && product.colors.includes('gray') ? 'checked' : '' %>>
+            <label class="opt" for="gray">Gray</label>
+        </p>
+        <p>
+            <label for="size">Available Sizes</label><br>
+            <ul style="list-style: none; padding: 0;">
+                <li>
+                    <input type="checkbox" id="xs" name="sizes" value="xs" <%= product.sizes && product.sizes.includes('xs') ? 'checked' : '' %>>
+                    <label for="xs">XS</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="s" name="sizes" value="s" <%= product.sizes && product.sizes.includes('s') ? 'checked' : '' %>>
+                    <label for="s">S</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="m" name="sizes" value="m" <%= product.sizes && product.sizes.includes('m') ? 'checked' : '' %>>
+                    <label for="m">M</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="l" name="sizes" value="l" <%= product.sizes && product.sizes.includes('l') ? 'checked' : '' %>>
+                    <label for="l">L</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="xl" name="sizes" value="xl" <%= product.sizes && product.sizes.includes('xl') ? 'checked' : '' %>>
+                    <label for="xl">XL</label>
+                </li>
+            </ul>
+        </p>
+    </div>
+    <div class="image-upload-control">
+        <p>
+            <label for="image-1" class="custom-file-upload">Image 1</label>
+            <input type="file" id="image-1" class="image-input" accept="image/png, image/jpg, image/jpeg" <% if(imageRequired) { %>required<% } %>>
+        </p>
+        <% if (product.imageUrls && product.imageUrls[0]) { %>
+            <img src="<%= product.imageUrls[0] %>" alt="Selected Image 1" style="width: 100px; height: auto;">
+        <% } else { %>
+            <img src="" alt="Selected Image 1" style="display: none;">
+        <% } %>
+    </div>
+    <div class="image-upload-control">
+        <p>
+            <label for="image-2" class="custom-file-upload">Image 2</label>
+            <input type="file" id="image-2" class="image-input" accept="image/png, image/jpg, image/jpeg" <% if(imageRequired) { %>required<% } %>>
+        </p>
+        <% if (product.imageUrls && product.imageUrls[1]) { %>
+            <img src="<%= product.imageUrls[1] %>" alt="Selected Image 2" style="width: 100px; height: auto;">
+        <% } else { %>
+            <img src="" alt="Selected Image 2" style="display: none;">
+        <% } %>
+    </div>
+    <div class="image-upload-control">
+        <p>
+            <label for="image-3" class="custom-file-upload">Image 3</label>
+            <input type="file" id="image-3" class="image-input" accept="image/png, image/jpg, image/jpeg" <% if(imageRequired) { %>required<% } %>>
+        </p>
+        <% if (product.imageUrls && product.imageUrls[2]) { %>
+            <img src="<%= product.imageUrls[2] %>" alt="Selected Image 3" style="width: 100px; height: auto;">
+        <% } else { %>
+            <img src="" alt="Selected Image 3" style="display: none;">
+        <% } %>
+    </div>
+    <div class="image-upload-control">
+        <p>
+            <label for="image-4" class="custom-file-upload">Image 4</label>
+            <input type="file" id="image-4" class="image-input" accept="image/png, image/jpg, image/jpeg">
+        </p>
+        <% if (product.imageUrls && product.imageUrls[3]) { %>
+            <img src="<%= product.imageUrls[3] %>" alt="Selected Image 4" style="width: 100px; height: auto;">
+        <% } else { %>
+            <img src="" alt="Selected Image 4" style="display: none;">
+        <% } %>
+    </div>
+    <p id="new-p-buttons">
+        <button type="reset" class="btn btn-dark">Reset</button>
+        <button type="submit" class="btn btn-dark">Save</button>
+    </p>
+</form>
+
+<script>
+  const form = document.getElementById("product-form");
+  const imageInputs = document.querySelectorAll(".image-input");
+  const hiddenInput = document.getElementById("uploadedImageUrls");
+
+  const cloudName = "dg9ovksi1";               
+  const uploadPreset = "bubiwear_images";      
+
+  async function uploadToCloudinary(file) {
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("upload_preset", uploadPreset);
+
+     const res = await fetch(url, {
+    method: "POST",
+    body: fd,
+    mode: "cors"           
+  });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || "Cloudinary upload failed");
+    return data.secure_url;
+  }
+
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const fdTest = new FormData(form);
+    console.log("--- FORM DATA ENTRIES ---");
+    for (let [key, value] of fdTest.entries()) {
+        console.log(key, "→", value);
+    }
+  console.log("-------------------------");
+    for (let [key, value] of fd.entries()) {
+        console.log(key, "→", value);
+    }
+    const uploadedUrls = [];
+
+    for (let input of imageInputs) {
+      const file = input.files[0];
+      if (!file) continue;
+      try {
+        const url = await uploadToCloudinary(file);
+        uploadedUrls.push(url);
+      } catch (err) {
+        console.error("Upload hatası:", err);
+        alert("Fotoğraf yüklenirken hata oluştu: " + err.message);
+        return; 
+      }
+    }
+
+    hiddenInput.value = uploadedUrls.join(",");
+    form.submit();
+  });
+</script>

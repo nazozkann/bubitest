@@ -1,0 +1,71 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Profile' }) %>
+<link rel="stylesheet" href="/styles/profile.css">
+<script src="/javascript/favorites-management.js" defer></script>
+</head>
+<body>
+  <%- include('../../shared/includes/header') %>
+  <main>
+    <div class="lower-side">
+      <div class="category-subheader">
+        <a class="underlined" href="/profile/favorites">Favorites</a>
+        <a href="/profile/addresses">Addresses</a>
+      </div>
+      <div class="favorites-area">
+        <h1>Your Favorite Products</h1>
+        <div class="products-area">
+          <ul class="product-grid">
+            <% if (favorites.length === 0) { %>
+              <p>You have no favorite products yet.</p>
+          <% } else { %>
+              <ul class="product-item">
+                  <% favorites.forEach(favorite => { %>
+                      <li>
+                          <div class="pc-up-info">
+                            <div class="pc-color-options">
+                                <div class="pc-black-circle"></div>
+                                <div class="pc-white-circle"></div>
+                                <div class="pc-grey-circle"></div>
+                            </div>
+                                <a href="/products/<%= favorite.id %>">View Details</a>
+                          </div>
+                          <img src="<%= favorite.imageUrls[0] %>" alt="<%= favorite.title %>">
+                          <div class="pc-down-info">
+                            <div class="pc-down-texts">
+                              <h2><%= favorite.title %></h2>
+                              <p><%= favorite.price %> ₺</p>
+                            </div>
+                            <div class="pc-down-fav">
+                              <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+                              <img 
+                                class="fav-icon" 
+                                src="<%= user && user.favorites && user.favorites
+                                  .map(fav => fav.toString())
+                                  .includes(favorite.id.toString())
+                                    ? '/images/fav-icon-active.png' 
+                                    : '/images/fav-icon-ligth.png'
+                                %>" 
+                                alt="Favorite Icon" 
+                                data-isauth="<%= locals.isAuth %>" 
+                                data-productid="<%= favorite.id %>" 
+                                data-title="<%= favorite.title %>" 
+                                data-price="<%= favorite.price %>" 
+                                data-imageurl="<%= favorite.imageUrls[0] %>" 
+                                data-isfavorite="<%= user && user.favorites && user.favorites
+                                  .map(fav => fav.toString())
+                                  .includes(favorite.id.toString())
+                                %>"
+                              >
+                            </div>
+                          </div>
+                      </li>
+                  <% }); %>
+              </ul>
+          <% } %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  <%- include('../../shared/includes/footer') %>
+</body>
+</html>

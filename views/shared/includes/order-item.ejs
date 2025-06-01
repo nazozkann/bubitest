@@ -1,0 +1,66 @@
+<article class="order-item">
+  <header class="order-summary">
+    <h2>
+      <span class="order-item-price">₺<%= order.productData.totalPrice.toFixed(2) %></span> - <%= order.formattedDate %>
+    </h2>
+    <p class="status-info"><%= order.status.toUpperCase() %></p> <!-- Display current status -->
+  </header>
+
+  <section class="order-details">
+    <% if (locals.isAdmin) { %>
+      <address>
+        <h3>Customer-Info</h3>
+        <p>E-mail: <%= order.userData.email %></p>
+        <p>Name: <%= order.userData.fullname %></p>
+        <% if (order.address) { %> <!-- Added conditional check -->
+          <p>Address:</p>
+          <p>
+            <%= order.address.fullName %><br>
+            <%= order.address.phoneNumber %><br>
+            <%= order.address.street %>, Apt <%= order.address.apartment %><br>
+            <%= order.address.district %>, <%= order.address.city %>, <%= order.address.postCode %>
+          </p>
+        <% } else { %> <!-- Fallback content -->
+          <p>No address information available.</p>
+        <% } %>
+      </address>
+    <% } %>
+    <ul>
+      <h3>Product-Info</h3>
+      <% for (const item of order.productData.items) { %>
+        <li class="product-info-li">
+          <% if (item.product) { %>
+            <a href="/products/<%= item.product.id %>"><%= item.product.title %></a>
+          <% } else if (item.design) { %>
+            <a href="/design/items/<%= item.design.id %>"><%= item.design.title %></a>
+          <% } else { %>
+            Unknown Item
+          <% } %> - ₺<%= item.totalPrice.toFixed(2) %> (₺<%= item.product ? item.product.price.toFixed(2) : (item.design ? item.design.price.toFixed(2) : 0) %> x <%= item.quantity %>) 
+          <% if (locals.isAdmin && item.product) { %>
+            - Size: <%= item.size %>, Color: <%= item.product.color %>
+          <% } else if (locals.isAdmin &&  item.design) {%>
+            Color: <%= item.design.color %>
+          <% } %>
+        </li>
+      <% } %>
+    </ul>
+  </section>
+
+  <% if (locals.isAdmin) { %>
+    <section class="order-actions">
+      <h3>Order-Status</h3>
+      <form>
+        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+        <input type="hidden" name="orderid" value="<%= order.id %>">
+        <select name="status">
+          <option value="sipariş-alındı" <% if (order.status === 'sipariş-alındı') { %>selected<% } %>>Sipariş Alındı</option>
+          <option value="hazırlanıyor" <% if (order.status === 'hazırlanıyor') { %>selected<% } %>>Hazırlanıyor</option>
+          <option value="gönderildi" <% if (order.status === 'gönderildi') { %>selected<% } %>>Gönderildi</option>
+          <option value="iptal/iade" <% if (order.status === 'iptal/iade') { %>selected<% } %>>İptal/İade</option>
+        </select>
+        <button class="btn btn-alt">Update</button>
+        <hr>
+      </form>
+    </section>
+  <% } %>
+</article>

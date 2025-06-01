@@ -1,0 +1,102 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Design' }) %>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/styles/design.css">
+<link rel="stylesheet" href="/styles/base.css">
+<script src="/javascript/design.js" defer></script>
+<script src="/javascript/cart-management.js" defer></script>
+</head>
+<body>
+    <%- include('../../shared/includes/header') %>
+    <main class="design-page-layout">
+        <form id="design-form" action="/design/items?_csrf=<%= locals.csrfToken %>" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="productId" value="<%= locals.productId %>">
+
+            <!-- FRONT IMAGE COORDINATES -->
+            <input type="hidden" id="front-left" name="frontLeft" value="">
+            <input type="hidden" id="front-top" name="frontTop" value="">
+            <input type="hidden" id="front-width" name="frontWidth" value="">
+            <input type="hidden" id="front-height" name="frontHeight" value="">
+
+            <!-- BACK IMAGE COORDINATES -->
+            <input type="hidden" id="back-left" name="backLeft" value="">
+            <input type="hidden" id="back-top" name="backTop" value="">
+            <input type="hidden" id="back-width" name="backWidth" value="">
+            <input type="hidden" id="back-height" name="backHeight" value="">
+
+            <div class="select-color">
+                <p>Select Color</p>
+                <div class="colors">
+                    <input type="radio" id="color-black" name="color" value="black" style="display: none;">
+                    <label for="color-black" class="black"></label>
+                    <input type="radio" id="color-white" name="color" value="white" style="display: none;">
+                    <label for="color-white" class="white"></label>
+                    <input type="radio" id="color-grey" name="color" value="grey" style="display: none;">
+                    <label for="color-grey" class="grey"></label>
+                </div>
+                <div class="design-price">
+                    <p>Price: <span id="price-info" name="price">0</span> $</p>
+                </div>
+            </div>
+            <div class="add-design">
+                <div class="user-design-interaction">
+                    <div id="image-upload-front" class="image-upload">
+                        <div class="upload-image-info">
+                            <div id="front-border" class="design-border">
+                                <div id="uploaded-image-container-front" class="uploaded-image-container"></div>
+                            </div>
+                        </div>
+                        <img class="template" src="/images/design-front.png" alt="">
+                        <div class="upload-image-bottom-info-front">
+                            <p class="upload-text">Upload Your Image Here</p>
+                            <input id="file-input-front" type="file" name="designImageFront" accept="image/*" style="display: none;">
+                            <img id="upload-trigger-front" class="upload-img" src="/images/upload.png" alt="Upload Icon">
+                        </div>
+                        <div class="front-btn">
+                            <button id="front-btn" class="direction-btn" type="button">Back</button>
+                        </div>
+                    </div>
+                    <div id="image-upload-back" class="image-upload">
+                        <div class="upload-image-info">
+                            <div id="back-border" class="design-border">
+                                <div id="uploaded-image-container-back" class="uploaded-image-container"></div>
+                            </div>
+                        </div>
+                        <img class="template" src="/images/design-back.png" alt="">
+                        <div class="upload-image-bottom-info-back">
+                            <p class="upload-text">Upload Your Image Here</p>
+                            <input id="file-input-back" type="file" name="designImageBack" accept="image/*" style="display: none;">
+                            <img id="upload-trigger-back" class="upload-img" src="/images/upload.png" alt="Upload Icon">
+                        </div>
+                        <div class="back-btn">
+                            <button id="back-btn" class="direction-btn" type="button">Front</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-area">
+                <button class="button-upload" id="add-to-chart-design" type="submit">Add To Chart</button>
+            </div>
+        </form>
+        <div class="go-to-wider-screen">
+            <div class="screen-animation">
+                <div class="camera-area"></div>
+                <p class="animation-screen-response"></p>
+            </div>
+            <div class="screen-info-text">
+                <p id="s-i-t-1">Our design builder is made for larger screens.</p>
+                <p id="s-i-t-2"> Please use a wider screen to access this feature.</p>
+            </div>
+            <a id="go-home" href="/">Home</a>
+        </div>
+    </main>
+<%- include('../../shared/includes/footer') %>
+<script>
+// Ensure that one of the color options is selected before submitting the form
+document.getElementById('design-form').addEventListener('submit', function(event) {
+    const selectedColor = document.querySelector('input[name="color"]:checked');
+    if (!selectedColor) {
+        event.preventDefault();
+        alert('Please select a color.');
+    }
+});
+</script>

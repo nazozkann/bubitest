@@ -1,0 +1,60 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Admin Orders' }) %>
+<link rel="stylesheet" href="/styles/design-orders.css">
+</head>
+<body>
+  <%- include('../../shared/includes/header') %>
+  <main>
+    <div class="designed-order-layout">
+        <h1><%= design.title %></h1>
+        <p>Color: <%= design.color %></p>
+
+        <div class="front-image-preview">
+            <!-- FRONT IMAGE PREVIEW -->
+        <% if (design.frontImage) { %>
+            <div class="design-border">
+                <img
+                  src="/products/assets/uploads/<%= design.frontImage %>"
+                  alt="Front Image"
+                  style="
+                    position: absolute;
+                    left: <%= design.frontLeft ? design.frontLeft : 0 %>px;
+                    top: <%= design.frontTop ? design.frontTop : 0 %>px;
+                    width: <%= design.frontWidth ? design.frontWidth : 100 %>px;
+                    height: auto;
+                  "
+                >
+            </div>
+            <img class="front-template" src="/images/design-front.png" alt="">
+        <% } %>
+        </div>
+
+        <div class="back-image-preview">
+            <!-- BACK IMAGE PREVIEW -->
+        <% if (design.backImage) { %>
+            <div class="design-border">
+                <img
+                  src="/products/assets/uploads/<%= design.backImage %>"
+                  alt="Back Image"
+                  style="
+                    position: absolute;
+                    left: <%= design.backLeft ? design.backLeft : 0 %>px;
+                    top: <%= design.backTop ? design.backTop : 0 %>px;
+                    width: <%= design.backWidth ? design.backWidth : 100 %>px;
+                    height: auto;
+                  "
+                >
+            </div>
+            <img class="back-template" src="/images/design-back.png" alt="">
+        <% } %>
+        </div>
+        <div class="big-images">
+            <% if (design.frontImage) { %>
+                <img src="/products/assets/uploads/<%= design.frontImage %>" alt="">
+            <% } %>
+            <% if (design.backImage) { %>
+                <img src="/products/assets/uploads/<%= design.backImage %>" alt="">
+            <% } %>
+        </div>
+    </div>
+  </main>
+</body>

@@ -1,0 +1,28 @@
+<%- include('../../shared/includes/head', { pageTitle: 'T-shirts' }) %>
+<link rel="stylesheet" href="/styles/products.css">
+<link rel="stylesheet" href="/styles/base.css">
+<link rel="stylesheet" href="/styles/customer-products.css">
+<script src="javascript/favorites-management.js" defer></script>
+</head>
+<body>
+    <%- include('../../shared/includes/header') %>
+    <main class="product-page-layout">
+        <div class="category-subheader">
+            <a href="/t-shirts">T-shirts</a>
+            <a href="/sweatshirts">Sweatshirts</a>
+            <a href="/pants">Pants</a>
+            <a id="underlined" href="/bags">Bags</a>
+        </div>
+        <div class="products-area">
+            <ul class="product-grid">
+                <% for (const product of products) { %>
+                    <% if (product.category === 'bags') { %>
+                        <li>
+                            <%- include('../../shared/includes/product-item', { product: product }) %>
+                        </li>
+                    <% } %>
+                <% } %>
+            </ul>
+        </div>
+    </main>
+<%- include('../../shared/includes/footer') %>
