@@ -1,0 +1,47 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Your Cart' }) %>
+<link rel="stylesheet" href="/styles/cart.css">
+<script src="/javascript/cart-management.js" defer></script>
+</head>
+<body>
+    <%- include('../../shared/includes/header') %>
+    <main class="cart-layout">
+        <div class="cart-area" id="cart-area">
+            <h1>Cart</h1>
+            <% if (locals.cart.items.length > 0) { %>
+                <% locals.cart.items.forEach(item => { %>
+                    <div class="cart-item">
+                        <div class="item-info">
+                            <div class="item-details">
+                                <h4><%= item.product ? item.product.title : (item.design ? item.design.title : 'Unknown Item') %></h4>
+                                <p><%= item.product ? item.product.price : (item.design ? item.design.price : 0) %>₺</p>
+                            </div>
+                            <div class="item-details-2">
+                                <p>Quantity: <%= item.quantity %></p>
+                                <button class="cancel-btn" 
+                                    data-item-id="<%= item.product ? item.product.id : (item.design ? item.design.id : '') %>" 
+                                    data-size="<%= item.size %>" 
+                                    data-color="<%= item.color %>" 
+                                    data-csrf="<%= csrfToken %>">×</button>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+                <div class="lower-info-total">
+                    <hr>
+                    <div class="total-info">
+                        <p>Total</p>
+                        <p><%= locals.cart.totalPrice.toFixed(2) %>₺</p>
+                    </div>
+                </div>
+                <div class="pay-btn">
+                    <form action="/cart/checkout" method="GET"> <!-- Changed action from /orders to /cart/checkout and method to GET -->
+                        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+                        <button class="btn btn-dark">Proceed to Checkout</button>
+                    </form>
+                </div>
+            <% } else { %>
+                <p id="your-empty-cart">Your cart is empty.</p>
+            <% } %>
+        </div>
+    </main>
+    <%- include('../../shared/includes/footer') %>

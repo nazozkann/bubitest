@@ -1,0 +1,114 @@
+/* Genel Reset */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Yatay kaydırmayı engeller */
+}
+
+/* Ana Bölüm */
+main {
+  width: 100%;
+  height: auto; /* Change to auto to allow scrolling */
+  position: relative;
+  margin-top: 6.5rem;
+}
+
+/* Başlık Bölümü */
+.bubi-text {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky; /* Sticky özelliği */
+  top: 10rem; /* Sayfanın en üstünde sabitlenir */
+  z-index: 10; /* Diğer içeriklerin üstünde kalır */
+  font-size: 1.5rem; /* Metin boyutunu ayarlar */
+  margin-bottom: -15rem; /* Adjust margin to ensure visibility */
+  margin-left: 2rem;
+  color: antiquewhite;
+}
+
+/* Slideshow Genel Ayarları */
+.slide-show {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Taşmaları gizler */
+  position: relative;
+}
+
+/* Scroll down icon styling */
+.scroll-down {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20; /* Ensure it is above all images */
+  cursor: pointer;
+}
+.scroll-down img {
+  height: 3rem;
+  width: auto;
+}
+
+/* Görseller için fade-in ve fade-out efekti */
+.slide-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slide-wrapper img {
+  position: absolute; /* Görseller üst üste gelir */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Görselin genişliği ekran genişliği kadar */
+  height: 100vh; /* Görselin yüksekliği ekran yüksekliği kadar */
+  object-fit: cover; /* Görsellerin düzgün görünmesini sağlar */
+  object-position: center;
+  opacity: 0; /* Başlangıçta görünmez */
+  animation: fadeAnimation 12s infinite; /* Görseller için fade animasyonu */
+}
+#img-s-1 {
+  height: 93vh;
+}
+/* Her görselin görünme sırasını ayarlamak için delay ekliyoruz */
+.slide-wrapper img:nth-child(1) {
+  animation-delay: 0s;
+}
+.slide-wrapper img:nth-child(2) {
+  animation-delay: 3s;
+}
+.slide-wrapper img:nth-child(3) {
+  animation-delay: 6s;
+}
+.slide-wrapper img:nth-child(4) {
+  animation-delay: 9s;
+}
+
+/* Fade animasyonu */
+@keyframes fadeAnimation {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Sticky class for mobile menu */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload, Drag and Scale</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border: 2px dashed #aaa;
+            overflow: hidden;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+        .container input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .container img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            max-width: 100%;
+            max-height: 100%;
+            cursor: grab;
+        }
+        .resizer {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 15px;
+            height: 15px;
+            background-color: #007bff;
+            border-radius: 50%;
+            cursor: nwse-resize;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="imageContainer">
+        <input type="file" id="uploadInput" accept="image/*">
+        <div class="resizer" id="resizer"></div>
+    </div>
+
+    <script>
+        const container = document.getElementById('imageContainer');
+        const uploadInput = document.getElementById('uploadInput');
+        const resizer = document.getElementById('resizer');
+        let image = null;
+        let isDragging = false;
+        let isResizing = false;
+        let offsetX, offsetY;
+        let startWidth, startHeight;
+        let startMouseX, startMouseY;
+
+        uploadInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (image) container.removeChild(image);
+
+                    image = document.createElement('img');
+                    image.src = e.target.result;
+                    image.style.width = '100%';
+                    image.style.height = 'auto';
+
+                    container.appendChild(image);
+
+                    image.addEventListener('mousedown', (e) => {
+                        isDragging = true;
+                        offsetX = e.clientX - image.offsetLeft;
+                        offsetY = e.clientY - image.offsetTop;
+                        image.style.cursor = 'grabbing';
+                    });
+
+                    window.addEventListener('mousemove', (e) => {
+                        if (isDragging) {
+                            const x = e.clientX - offsetX;
+                            const y = e.clientY - offsetY;
+                            image.style.left = `${x}px`;
+                            image.style.top = `${y}px`;
+                        }
+                    });
+
+                    window.addEventListener('mouseup', () => {
+                        isDragging = false;
+                        if (image) image.style.cursor = 'grab';
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+
+        resizer.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            isResizing = true;
+            startWidth = image.offsetWidth;
+            startHeight = image.offsetHeight;
+            startMouseX = e.clientX;
+            startMouseY = e.clientY;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (isResizing && image) {
+                const widthChange = e.clientX - startMouseX;
+                const heightChange = e.clientY - startMouseY;
+                const newWidth = startWidth + widthChange;
+                const newHeight = startHeight + heightChange;
+
+                image.style.width = `${newWidth}px`;
+                image.style.height = `${newHeight}px`;
+            }
+        });
+
+        window.addEventListener('mouseup', () => {
+            isResizing = false;
+        });
+    </script>
+</body>
+</html>

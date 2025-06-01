@@ -1,0 +1,37 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Payment' }) %>
+<link rel="stylesheet" href="/styles/cart.css">
+<script src="/javascript/cart-management.js" defer></script>
+</head>
+<body>
+    <%- include('../../shared/includes/header') %>
+    <main class="cart-layout">
+        <div class="cart-area" id="cart-area">
+            <div class="payment-info">
+                <!-- Payment form fields go here -->
+                 <h2>Card Info</h2>
+                <form action="/orders/place-order" method="POST"> <!-- New form to place order -->
+                    <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+                    <div class="form-group">
+                        <label for="card-name">Name On Card</label>
+                        <input type="text" id="card-name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiry-date">Expiration Date</label>
+                        <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                    </div>
+                    <button class="btn btn-primary">Place Your Order</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <%- include('../../shared/includes/footer') %>
+</body>
+</html>

@@ -1,0 +1,83 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+#about-us {
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 4rem;
+    height: calc(100vh - 60px); /* Adjust based on the height of the nav-bar */
+}
+
+.image-area {
+    width: auto;
+    height: 100%;
+}
+.image-area img{
+    width: auto;
+    height: 100%;
+}
+.text-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 3rem;
+    margin-right: 4rem;
+}
+.lower-info {
+    display: flex;
+    flex-direction: column;
+}
+.lower-info div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+.lower-info img{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.upper-info h1 {
+    font-size: 2.5rem;
+    font-weight: 200;
+}
+.upper-info p {
+    color: var(--color-text-ligth);
+    width: 32rem;
+}
+
+@media (max-width: 64rem) {
+    #about-us {
+        position: relative;
+        margin-left: 0;
+    }
+    .text-area {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.8); /* Optional: Add a semi-transparent background */
+        padding: 2rem;
+        width: 100%;
+        height: 100%;
+        margin-right: 0;
+    }
+    .image-area {
+        position: relative;
+        z-index: 0;
+        width: 100vw;
+        height: auto;
+    }
+    .image-area img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .upper-info p {
+        width: 100%;
+    }
+}

@@ -1,0 +1,49 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Signup' }) %>
+    <link rel="stylesheet" href="/styles/forms.css">
+    <link rel="stylesheet" href="/styles/auth.css">
+</head>
+<body>
+    <%- include('../../shared/includes/header') %>
+    <main>
+        <div class="form-div">
+            <% if (inputData.errorMessage) {%>
+                <section class="alert">
+                    <h2>Invalid Input</h2>
+                    <p><%= inputData.errorMessage %></p>
+                </section>
+            <% } %>
+            <h1>CREATE FREE ACCOUNT</h1>
+            <form action="/signup" method="POST">
+                <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+                <div>
+                    <label for="email">E-mail Address</label>
+                    <input type="email" id="email" name="email" value="<%= inputData.email %>" required>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" minlength="6" name="password" value="<%= inputData.password %>" required>
+                </div>
+                <div>
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" value="<%= inputData.fullname %>" required>
+                </div>
+                <div>
+                    <p id="term-of-use">
+                        You agree to our <a href="">Terms of Use</a> when creating an account.
+                    </p>
+                </div>
+                <div>
+                    <button class="btn btn-dark">
+                        Sign Up
+                    </button>
+                </div>
+                <div>
+                    <p>
+                        Why do you need an account?  <a href="">Read More</a>
+                    </p>
+                </div>
+                <a href="/signin">Sign In</a>
+            </form>
+        </div>
+    </main>
+<%- include('../../shared/includes/footer') %>

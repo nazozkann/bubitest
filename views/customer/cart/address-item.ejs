@@ -1,0 +1,23 @@
+<article class="address-item">
+    <div class="upper-buttons">
+        <a href="/cart/edit-address/<%= address.id %>" class="edit-btn">Edit</a>
+        <button 
+            class="delete-btn" 
+            type="button"
+            data-productid="<%= address.id %>"
+            data-csrf="<%= csrfToken %>"
+            data-redirect="<%= fromProfile ? 'profile' : 'cart' %>"
+        >
+            Delete
+        </button>
+    </div>
+    <div class="address-info">
+        <div class="upper-address-info">
+            <h3><%= address.fullName %></h3>
+            <p><%= address.phoneNumber %></p>
+        </div>
+        <div class="lower-address-info">
+            <p><%= address.city %> | <%= address.postCode %> | <%= address.district %> | <%= address.street %> | <%= address.apartment %></p>
+        </div>
+    </div>
+</article>

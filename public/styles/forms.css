@@ -1,0 +1,70 @@
+label{
+    display: block;
+    margin-bottom: 0.5rem;
+}
+input{
+    font: inherit;
+    margin-bottom: 0.5rem;
+    display: block;
+    width: 100%;
+    height: 2rem;
+    border: 1px solid var(--color-input-border);
+    border-radius: 4px;
+    background-color: var(--color-input-bg);
+}
+#add-new-product-main{
+    background-color: var(--color-form-bg);
+    height: 100%;
+    max-width: 40rem;
+    width: 100%;
+}
+#add-new-product-main form{
+    width: 90%;
+}
+.inpt-lbl-flex-row{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+.check-boxes input{
+    width: 1rem;
+    height: 1rem;
+    margin-left: 2rem;
+}
+.check-boxes p{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.check-boxes ul{
+    display: flex;
+    flex-direction: row;
+}
+#new-p-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 
+    4rem;
+}
+#add-new-product-main {
+    display: flex;
+    flex-direction: column;
+}
+#add-new-product-main h1{
+    text-align: left;
+}
+.image-upload-control{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
+}
+.image-upload-control input{
+    max-width: 15rem;
+}
+.image-upload-control img{
+    display: none;
+    width: 4rem;
+    height: auto;
+    object-fit: cover;
+}

@@ -1,0 +1,35 @@
+<article class="product-item">
+    <div class="pc-up-info">
+        <div class="pc-color-options">
+            <div class="pc-black-circle"></div>
+            <div class="pc-white-circle"></div>
+            <div class="pc-grey-circle"></div>
+        </div>
+        <% if (locals.isAdmin) { %>
+        <div class="pc-edit-product">
+            <a href="/admin/products/<%= product.id %>">Edit Product</a>
+        </div>
+        <% } else { %>
+            <a href="/products/<%= product.id %>">View Details</a>
+        <% } %>
+    </div>
+    <div class="pc-img">
+        <img src="<%= product.imageUrls[0] %>" alt=" <%= product.title %> ">
+    </div>
+    <div class="pc-down-info">
+        <div class="pc-down-texts">
+            <h2><%= product.title %></h2>
+            <p><%= product.price %> ₺</p>
+            <% if (locals.isAdmin) { %>
+            <form action="/admin/products/<%= product.id %>?_method=DELETE" method="POST">
+                <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+                <button class="btn btn-dark delete-btn" data-productid="<%= product.id %>">Delete</button>
+            </form>
+            <% } %>
+        </div>
+        <div class="pc-down-fav">
+            <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+            <img class="fav-icon" src="" alt="Favorite Icon" data-isauth="<%= locals.isAuth %>" data-productid="<%= product.id %>" data-title="<%= product.title %>" data-price="<%= product.price %>" data-imageurl="<%= product.imageUrls[0] %>" data-isfavorite="<%= user && user.favorites && user.favorites.map(fav => fav.toString()).includes(product.id.toString()) %>">
+        </div>
+    </div>
+</article>

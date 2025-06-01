@@ -1,0 +1,77 @@
+<%- include('../../shared/includes/head', { pageTitle: product.title }) %>
+<link rel="stylesheet" href="/styles/products.css">
+<link rel="stylesheet" href="/styles/base.css">
+<link rel="stylesheet" href="/styles/customer-products.css">
+<script src="/javascript/selection-options.js" defer></script>
+<script src="/javascript/cart-management.js" defer></script>
+</head>
+<body>
+    <%- include('../../shared/includes/header') %>
+    <main class="product-details-layout">
+        <div class="product-details-images">
+            <img src="<%= product.imageUrls[0] %>" alt=" <%= product.title %> ">
+            <img src="<%= product.imageUrls[1] %>" alt=" <%= product.title %> ">
+            <img src="<%= product.imageUrls[2] %>" alt=" <%= product.title %> ">
+            <img src="<%= product.imageUrls[3] %>" alt=" <%= product.title %> ">
+        </div>
+        <div class="product-details-add-to">
+            <div class="first-info">
+                <h1><%= product.title %></h1>
+                <p><%= product.price %>₺</p>
+            </div>
+            <div class="size-category">
+                <div class="custom-category-select">
+                    <div class="selected-category">
+                        <span>Size</span>
+                        <img src="/images/list-vector-ligth.png" alt="Default" />
+                    </div>
+                    <div class="category-options">
+                        <% product.sizes.forEach(size => { %>
+                            <div class="category-option" data-value="<%= size %>">
+                                <p><%= size.toUpperCase() %></p>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+            <div class="color-category">
+                <div class="custom-category-select">
+                    <div class="selected-category">
+                        <span>Color</span>
+                        <img src="/images/list-vector-ligth.png" alt="Default" />
+                    </div>
+                    <div class="category-options">
+                        <% product.colors.forEach(color => { %>
+                            <div class="category-option" data-value="<%= color %>">
+                                <p><%= color.charAt(0).toUpperCase() + color.slice(1) %></p>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+            <form id="add-to-cart-form" action="/cart/items" method="POST">
+                <input type="hidden" name="productId" value="<%= product.id %>">
+                <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+                <input type="hidden" name="size" id="selected-size" value="">
+                <input type="hidden" name="color" id="selected-color" value="">
+                <button id="one-time-btn" class="button-upload btn btn-dark">Add To Cart</button>
+            </form>
+            <div class="shipping-info">
+                <img src="/images/prepare-icon.png" alt="">
+                <p>Prepared by order</p>
+            </div>
+            <div class="shipping-info">
+                <img src="/images/shipping-icon.png" alt="">
+                <p>Shipping may take 1 week</p>
+            </div>
+        </div>
+    </main>
+<%- include('../../shared/includes/footer') %>
+<style>
+    /* Highlight selected options */
+    .category-option.selected {
+        border: 2px solid #000;
+        /* Add any additional styling for selected state */
+    }
+</style>
+</body>

@@ -1,0 +1,42 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Profile' }) %>
+<link rel="stylesheet" href="/styles/profile.css">
+</head>
+<body>
+  <%- include('../../shared/includes/header') %>
+  <main>
+    <div class="lower-side">
+      <div class="category-subheader">
+        <a href="/profile/favorites">Favorites</a>
+        <a class="underlined" href="/profile/addresses">Addresses</a>
+      </div>
+      <div class="info-part">
+        <h1>Your Addresses</h1>
+        <section>
+            <a href="/cart/add-address?redirect=profile" class="add-address-btn underlined">Add Address</a>
+            <ul class="address-grid">
+                <% for (const address of addresses) { %>
+                    <% if (address) { %> 
+                        <div class="address-item">
+                            <input 
+                                type="radio" 
+                                id="address-<%= address.id %>" 
+                                name="address" 
+                                value="<%= address.id %>" 
+                                form="checkout-form" 
+                                required
+                            >
+                            <label class="address-label" for="address-<%= address.id %>">
+                                <%- include('../cart/address-item', { address: address, csrfToken: csrfToken, fromProfile: true }) %>
+                            </label>
+                        </div>
+                    <% }  %>
+                <% } %>
+            </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+  <%- include('../../shared/includes/footer') %>
+  <script src="/javascript/cart-management.js" defer></script>
+</body>
+</html>
